@@ -1,0 +1,11 @@
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s;
+}
+
+.image:hover {
+  opacity: 0.9;
+}
