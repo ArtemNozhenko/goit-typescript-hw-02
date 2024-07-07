@@ -8,29 +8,31 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
 import css from "./App.module.css";
+import { Images, UnsplashResponse } from "../type";
 
 export default function App() {
-  const [gallery, setGallery] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [image, setImage] = useState("");
-  const [hasLoadMore, setHasLoadMore] = useState(false);
+  const [gallery, setGallery] = useState<Images[]>([]);
+  const [isLoading, setIsLoading] =
+    useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [searchQuery, setSearchQuery] =
+    useState<string>("");
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [image, setImage] = useState<string>("");
+  const [hasLoadMore, setHasLoadMore] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (searchQuery === "") {
       return;
     }
-    async function fetchGallery() {
+    async function fetchGallery(): Promise<void> {
       try {
         setIsLoading(true);
         setIsError(false);
-        const { results, total } = await getGallery(
-          searchQuery,
-          page
-        );
+        const { results, total }: UnsplashResponse =
+          await getGallery(searchQuery, page);
         setGallery((prevState) => [
           ...prevState,
           ...results,
@@ -45,22 +47,24 @@ export default function App() {
     fetchGallery();
   }, [searchQuery, page]);
 
-  const handleSearch = async (query) => {
+  const handleSearch = async (
+    query: string
+  ): Promise<void> => {
     setSearchQuery(query);
     setPage(1);
     setGallery([]);
   };
 
-  const handLoadMore = () => {
+  const handLoadMore = (): void => {
     setPage(page + 1);
   };
 
-  const openModal = (image) => {
+  const openModal = (image: string): void => {
     setImage(image);
     setIsOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setImage("");
     setIsOpen(false);
   };
