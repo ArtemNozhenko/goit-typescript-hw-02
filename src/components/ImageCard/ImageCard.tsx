@@ -1,6 +1,16 @@
+import React from "react";
+import { Images } from "../type";
 import css from "./ImageCard.module.css";
 
-export default function ImageCard({ item, onClick }) {
+interface ItemGalleryProps {
+  item: Images;
+  onClick: (image: string) => void;
+}
+
+const ImageCard: React.FC<ItemGalleryProps> = ({
+  item,
+  onClick,
+}) => {
   const handleClick = () => {
     onClick(item.urls.regular);
   };
@@ -14,4 +24,6 @@ export default function ImageCard({ item, onClick }) {
       />
     </div>
   );
-}
+};
+
+export default ImageCard;
